@@ -21,33 +21,47 @@
   </div>
   <!-- /.login-logo -->
   <div class="card">
+
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="../../index3.html" method="post">
+      <form action="{{ url('register_post')}}" method="post">
+        {{ csrf_field() }}
+        <span style="color: red">{{ $errors->first('name')}}</span>
         <div class="input-group mb-3">
-          <input type="name" class="form-control" placeholder="Name">
+          <input type="text" class="form-control" placeholder="Name" name="name" required value="{{ old('name')}}">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
             </div>
           </div>
         </div>
+        <span style="color: red" class="duplicate_message">{{ $errors->first('email')}}</span>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Email">
+            <input type="text" class="form-control" placeholder="Email" name="email" required value="{{ old('email')}}" onblur="duplicateEmail(this)">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-          </div>
+        </div>
+        <span style="color: red">{{ $errors->first('password')}}</span>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" name="password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
             </div>
           </div>
+        </div>
+        <span style="color: red">{{ $errors->first('confirm_password')}}</span>
+        <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
         </div>
         <div class="row">
           <div class="col-8">
@@ -82,6 +96,31 @@
 <script src="{{ url('backend/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ url('backend/dist/js/adminlte.min.js')}}"></script>
+<script type="text/javascript">
+    function duplicateEmail(element) {
+        var email = $(element).val();
+        // alert(email);
+        $.ajax({
+            type: "POST",
+            url: "{{ url('check_email')}}",
+            data: {
+                email: email,
+                _token: "{{ csrf_token()}}",
+            },
+            dataType: "json",
+            success: function(res) {
+                if (res.exists  ) {
+                    $('.duplicate_message').html("That email is taken, try another.");
+                } else {
+                    $('.duplicate_message').html("");
+                }
+            },
+            error: function(jqXHR, exception){
+
+            }
+        });
+    }
+</script>
 </body>
 </html>
 

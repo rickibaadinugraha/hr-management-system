@@ -21,12 +21,18 @@
   </div>
   <!-- /.login-logo -->
   <div class="card">
+
+    @include('_message');
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="../../index3.html" method="post">
+      <form action="{{ url('login_post')}}" method="post">
+
+        {{ csrf_field() }}
+
+        <span style="color: red">{{ $errors->first('email')}}</span>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -34,7 +40,8 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+        <span style="color: red">{{ $errors->first('password')}}</span>
+          <input type="password" name="password" class="form-control" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
