@@ -91,7 +91,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ url('admin/jobs')}}" class="nav-link">
+            <a href="{{ url('admin/jobs')}}" class="nav-link @if (Request::segment(2) == 'jobs') active @endif">
               <i class="nav-icon fa fa-briefcase"></i>
               <p>
                 Jobs
@@ -105,7 +105,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ url('admin/history')}}" class="nav-link">
+            <a href="{{ url('admin/job_history')}}" class="nav-link @if (Request::segment(2) == 'job_history') active @endif">
               <i class="nav-icon fa fa-history"></i>
               <p>
                 Job History
@@ -119,7 +119,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ url('admin/grades')}}" class="nav-link">
+            <a href="{{ url('admin/job_grades')}}" class="nav-link @if (Request::segment(2) == 'job_grades') active @endif"">
               <i class="nav-icon fa fa-star"></i>
               <p>
                 Job Grades
